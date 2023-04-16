@@ -5,7 +5,6 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.urls import reverse_lazy
 
-from Users.untils import InputMixin
 from .forms import PostForm
 from .models import Post
 from django.contrib.auth.models import User

@@ -6,7 +6,7 @@
 
                 <div class="circle-pict__post">
                     <img src="{{ post.author.profile.image.url }}" alt="">
-                    <a href="" class="post__author">{{ post.author }}</a>
+                    <a href="{% url 'user-posts' post.author.username %}" class="post__author">{{ post.author }}</a>
                     <small class="post__date">{{ post.date_posted }}</small>
                 </div>
                 <hr class="content-section__line">
