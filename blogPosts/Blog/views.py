@@ -17,7 +17,7 @@ class PostListView(ListView):
     template_name = 'Blog/home.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
-    paginate_by = 4
+    paginate_by = 3
 
 
 class UserPostListView(ListView):
