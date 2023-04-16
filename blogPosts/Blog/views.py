@@ -24,7 +24,7 @@ class UserPostListView(ListView):
     model = Post
     template_name = 'Blog/user_posts.html'
     context_object_name = 'posts'
-    paginate_by = 5
+    paginate_by = 3
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
