@@ -1,0 +1,35 @@
+{% extends 'Blog/base.html' %}
+{% block content %}
+    {% for post in posts %}
+        <div class="content-section">
+            <article class="home-post__item">
+
+                <div class="circle-pict__post">
+                    <img src="{{ post.author.profile.image.url }}" alt="">
+                    <a href="" class="post__author">{{ post.author }}</a>
+                    <small class="post__date">{{ post.date_posted }}</small>
+                </div>
+                <hr class="content-section__line">
+                <h2 class="post__title"><a class="post-title__link" href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h2>
+                <p class="post__content">{{ post.content|truncatewords:40  }}</p>
+            </article>
+        </div>
+    {% endfor %}
+        <div class="section-pagination">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="button button__edit">Previous</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a href="?page={{ num }}" class="button button__fill">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}" class="button button__edit">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="button button__edit">Next</a>
+            {% endif %}
+        </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<title>GoCorona</title>
+		<link href="https://fonts.googleapis.com/css?family=Lato:regular,600,700,900&display=swap&subset=cyrillic-ext" rel="stylesheet" />
+		<link rel="stylesheet" href="{% static 'Blog/css/style.css' %}" />
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+	</head>
+    <body>
+		<div class="wrapper">
+			<header class="header">
+				<div class="header__container">
+					<a href="{% url 'blog-home' %}" class="header__logo">BlogSite</a>
+					<div class="header__menu">
+						<nav class="menu__body">
+							<ul class="menu__left">
+								<li class="menu__item"><a href="{% url 'blog-home' %}" class="menu__link">Home</a></li>
+								<li class="menu__item"><a href="" class="menu__link">About</a></li>
+							</ul>
+							<ul class="menu__right">
+								{% if request.user.is_authenticated %}
+									<li class="menu__item"><a href="{% url 'post-create' %}" class="menu__link">New Post</a></li>
+									<li class="menu__item"><a href="{% url 'profile' %}" class="menu__link">Profile</a></li>
+									<li class="menu__item"><a href="{% url 'logout' %}" class="menu__link">Logout</a></li>
+								{% else %}
+									<li class="menu__item"><a href="{% url 'login' %}" class="menu__link">Login</a></li>
+									<li class="menu__item"><a href="{% url 'register' %}" class="menu__link">Register</a></li>
+								{% endif %}
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</header>
+			<main class="main">
+				<div class="home__container">
+					<div class="home-content">
+						<div class="home-posts">
+							{% if messages %}
+								{% for message in messages %}
+									<div class="content-section">
+										<p class="post__content">{{ message	}}</p>
+									</div>
+								{% endfor %}
+							{% endif %}
+							
+							{% block content %}
+							{% endblock %}
+						</div>
+						<div class="home-filter">
+							<div class="filter-item">
+								<h2 class="fiter-item__title">Our SideBar</h2>
+								<p class='fiter-item__text'>You can put any information here you'd like.
+								<ul class="'fiter-parms">
+									<li class="fiter-parm fiter-parm__item">Latest Posts</li>
+									<li class="fiter-parm fiter-parm__item">Announcements</li>
+									<li class="fiter-parm fiter-parm__item">Calendars</li>
+									<li class="fiter-parm fiter-parm__item">etc</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
+	</body>
+<html>

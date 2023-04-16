@@ -1,0 +1,25 @@
+{% extends 'Blog/base.html' %}
+{% block content %}
+      <div class="content-section">
+          <article class="home-post__item">
+              <div class="circle-pict__post">
+                  <img src="{{ post.author.profile.image.url }}" alt="">
+                  <a href="" class="post__author">{{ post.author }}</a>
+                  <small class="post__date">{{ post.date_posted }}</small>
+              </div>
+              <hr class="content-section__line">
+
+              <div class="post__body">
+                <h2 class="post__title">{{ post.title }}</h2>
+                <p class="post__content">{{ post.content }}</p>
+              </div>
+
+              {% if user.username == post.author.username %}
+                  <div class="post__button">
+                    <a href="{% url 'post-edit' post.pk %}" class="button button__edit">Edit</a>
+                    <a href="{% url 'post-delete' post.pk %}" class="button button__delete">Delete</a>
+                  </div>
+              {% endif %}
+          </article>
+      </div>
+{% endblock %}

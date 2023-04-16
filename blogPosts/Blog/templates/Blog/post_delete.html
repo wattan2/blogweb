@@ -1,0 +1,17 @@
+{% extends 'Blog/base.html' %}
+{% block content %}
+      <form method="POST">
+          {% csrf_token %}
+          <div class="content-section">
+              <h2 class="content-section__title">Delete Post</h2>
+              <hr class="content-section__line">
+              <div class="post__body">
+                <h2 class="post__title">Are you sure you want to delete the post "{{ post.title }}"</h2>
+              </div>
+              <div class="post__button">
+                <input type="submit" value="Yes, I'm sure" class="button button__delete">
+                <a href="{% url 'post-detail' post.pk %}" class="button button__edit">Cancel</a>
+              </div>
+          </div>
+      </form>
+{% endblock %}

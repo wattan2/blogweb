@@ -1,0 +1,22 @@
+{% extends 'Blog/base.html' %}
+{% block content %}
+      <form method="POST">
+          {% csrf_token %}
+          <div class="content-section">
+              <h2 class="content-section__title">Create Post</h2>
+              <hr class="content-section__line">
+              {% for field in form %}
+                  <div class="text-field">
+                      <label class="text-field__label">{{field.label}}: </label>
+                      <div>{{field}}</div>
+                      {% if field.errors %}
+                          <label class="form-label-error" for="{{ field.auto_id }}" style="color:red">
+                              {{ field.errors }}
+                          </label>
+                      {% endif %}
+                  </div>
+              {% endfor %}
+              <input type="submit" value="Create" class="button">
+          </div>
+      </form>
+{% endblock %}

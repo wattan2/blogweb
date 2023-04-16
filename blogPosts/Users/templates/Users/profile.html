@@ -1,0 +1,44 @@
+{% extends 'Blog/base.html' %}
+{% block content %}
+    <div class="content-section">
+        <div class="content__body">
+            <div class="circle-pict__profile">
+                <img src="{{ user.profile.image.url }}" alt="">
+            </div>
+            <div class="content__info">
+                <h2 class="profle__username">{{ user.username }}</h2>
+                <p1>{{ user.email }}</p1>
+            </div>
+        </div>
+        <div class="profile-update">
+            <h2 class="content-section__title">Profile Info</h2>
+            <hr class="content-section__line">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in user_form %}
+                    <div class="text-field">
+                        <label class="text-field__label">{{field.label}}: </label>
+                        <div>{{field}}</div>
+                        {% if field.errors %}
+                            <label class="form-label-error" for="{{ field.auto_id }}" style="color:red">
+                                {{ field.errors }}
+                            </label>
+                        {% endif %}
+                    </div>
+                 {% endfor %}
+
+                 {% for field in form %}
+                    <div class="text-field">
+                        <div class="profile-update__picture">{{field}}</div>
+                        {% if field.errors %}
+                            <label class="form-label-error" for="{{ field.auto_id }}" style="color:red">
+                                {{ field.errors }}
+                            </label>
+                        {% endif %}
+                    </div>
+                 {% endfor %}
+                 <button type="submit" class="button">Save</button>
+             </form>
+        </div>
+    </div>
+{% endblock %}
