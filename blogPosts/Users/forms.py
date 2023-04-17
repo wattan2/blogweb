@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth import views
 from django.contrib.auth.models import User
 
@@ -27,6 +27,19 @@ class UserUpdateForm(InputMixin, forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email')
+
+
+class PasswordResetForm(InputMixin, PasswordResetForm):
+    class Meta:
+        model = User
+        fields = ('email')
+
+
+class PasswordSetForm(InputMixin, SetPasswordForm):
+    class Meta:
+        model = User
+        fields = ('password1', 'password2')
+
 
 
 class ProfileUpdateForm(forms.ModelForm):

@@ -30,7 +30,6 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
-
 class PostDetailView(DetailView):
     model = Post
     template_name = 'Blog/post_form.html'
@@ -59,7 +58,6 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def form_valid(self, form):
         messages.success(self.request, f'Post has been deleted')
         return super().form_valid(form)
-
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):

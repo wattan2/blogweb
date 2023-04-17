@@ -4,9 +4,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
 from .models import Profile
-from .forms import UserRegisterForm, UserAuthenticationForm, ProfileUpdateForm, UserUpdateForm
+from .forms import UserRegisterForm,\
+    UserAuthenticationForm,\
+    ProfileUpdateForm,\
+    UserUpdateForm,\
+    PasswordResetForm,\
+    PasswordSetForm
+
 from django.views.generic import CreateView, DetailView, UpdateView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
 from django.contrib.auth import logout, login
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,6 +28,17 @@ class UserRegister(CreateView):
         login(self.request, user)
         messages.success(self.request, f'Успешная регистрация')
         return redirect('blog-home')
+
+
+class PasswordResetView(PasswordResetView):
+    form_class = PasswordResetForm
+    template_name = 'Users/password_reset.html'
+
+
+class PasswordResetConfirmView(PasswordResetConfirmView):
+    form_class = PasswordSetForm
+    template_name = 'Users/password_reset_confirm.html'
+    success_url = reverse_lazy('blog-home')
 
 
 class UserProfile(LoginRequiredMixin, UpdateView):
@@ -78,3 +95,7 @@ class UserAuth(LoginView):
 def logout_user(request):
     logout(request)
     return redirect('login')
+
+
+class PasswordResetDoneView(DetailView):
+    pass

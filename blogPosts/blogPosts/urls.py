@@ -11,8 +11,11 @@ urlpatterns = [
     path('login/', views.UserAuth.as_view(), name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('profile/', views.UserProfile.as_view(), name='profile'),
+    path('password-reset/', views.PasswordResetView.as_view(), name='password_reset'),
+    path('password-reset/done/', views.PasswordResetDoneView.as_view(template_name='password_reset_done'), name='password_reset_done'),
+    path('password-reset-confirm/<uid64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 ]
 
 
-if settings.DEBUG:
+if settings.DEBUG: 
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
