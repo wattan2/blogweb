@@ -29,16 +29,15 @@ class UserUpdateForm(InputMixin, forms.ModelForm):
         fields = ('username', 'email')
 
 
-class PasswordResetForm(InputMixin, PasswordResetForm):
-    class Meta:
-        model = User
-        fields = ('email')
+class UserForgotPasswordForm(InputMixin, PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
-class PasswordSetForm(InputMixin, SetPasswordForm):
-    class Meta:
-        model = User
-        fields = ('password1', 'password2')
+class UserSetNewPasswordForm(InputMixin, SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
 
 
 

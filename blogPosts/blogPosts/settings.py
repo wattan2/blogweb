@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'Blog.apps.BlogConfig',
     'Users.apps.UsersConfig',
     'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -128,9 +129,17 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SITE_ID = 1
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_POST = 587
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'alenaafanacev@gmail.com'
-EMAIL_HOST_PASSWORD = 'J64NBT*AJZM%a26!8'
+
+EMAIL_HOST_USER = 'maksgamingcristalix@gmail.com'
+EMAIL_HOST_PASSWORD = 'pwhwthfngxdlwgwo'
+
+EMAIL_SERVER = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = ['maxim.perepelitsa12@gmail.com']

@@ -4,12 +4,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 
 from .models import Profile
-from .forms import UserRegisterForm,\
-    UserAuthenticationForm,\
-    ProfileUpdateForm,\
-    UserUpdateForm,\
-    PasswordResetForm,\
-    PasswordSetForm
+from .forms import UserRegisterForm, \
+    UserAuthenticationForm, \
+    ProfileUpdateForm, \
+    UserUpdateForm, \
+    PasswordResetForm, \
+    UserSetNewPasswordForm, UserForgotPasswordForm
 
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetConfirmView
@@ -30,13 +30,15 @@ class UserRegister(CreateView):
         return redirect('blog-home')
 
 
-class PasswordResetView(PasswordResetView):
-    form_class = PasswordResetForm
+class UserForgotPasswordView(PasswordResetView):
+    form_class = UserForgotPasswordForm
     template_name = 'Users/password_reset.html'
+    email_template_name = 'Users/email/password_reset_mail.html'
+    subject_template_name = 'Users/email/password_subject_reset_mail.txt'
 
 
-class PasswordResetConfirmView(PasswordResetConfirmView):
-    form_class = PasswordSetForm
+class UserPasswordResetConfirmView(PasswordResetConfirmView):
+    form_class = UserSetNewPasswordForm
     template_name = 'Users/password_reset_confirm.html'
     success_url = reverse_lazy('blog-home')
 
