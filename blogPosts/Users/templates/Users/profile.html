@@ -1,4 +1,5 @@
 {% extends 'Blog/base.html' %}
+{% load users_tags %}
 {% block content %}
     <div class="content-section">
         <div class="content__body">
@@ -15,17 +16,7 @@
             <hr class="content-section__line">
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {% for field in user_form %}
-                    <div class="text-field">
-                        <label class="text-field__label">{{field.label}}: </label>
-                        <div>{{field}}</div>
-                        {% if field.errors %}
-                            <label class="form-label-error" for="{{ field.auto_id }}" style="color:red">
-                                {{ field.errors }}
-                            </label>
-                        {% endif %}
-                    </div>
-                 {% endfor %}
+                {% show_form user_form %}
 
                  {% for field in form %}
                     <div class="text-field">

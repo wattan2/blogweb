@@ -1,0 +1,15 @@
+{% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="button button__edit">Previous</a>
+{% endif %}
+
+{% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+        <a href="?page={{ num }}" class="button button__fill">{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{ num }}" class="button button__edit">{{ num }}</a>
+    {% endif %}
+{% endfor %}
+
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="button button__edit">Next</a>
+{% endif %}

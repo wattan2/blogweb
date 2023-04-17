@@ -255,7 +255,7 @@ body{
 .content-section__line {
 
 	border: none;
-	margin: 6px 0px 10px 0px;
+	margin: 10px 0px 20px 0px;
 	background-color: rgb(211, 210, 210);
 	color: red;
 	border-radius: 1px;
