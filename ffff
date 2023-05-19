@@ -1,0 +1,52 @@
+def generate_date_filter_criteria(selected_date: date, period: Period) -> dict:
+    """Перевод строки Period в запрос фильтр"""
+    filter_criteria = {
+        period.DAY: {'date_created': selected_date},
+        period.WEEK: {'date_created__in': get_dates_of_week(selected_date), },
+        period.MONTH: {'date_created__year': selected_date.year,
+                       'date_created__month': selected_date.month},
+
+        period.YEAR: {'date_created__year': selected_date.year},
+    }
+    return filter_criteria.get(period)
+
+
+def get_expenses_for_categories_user(request, selected_date: date, period: Period):
+    """Получение всех трат по категориям с процентом от общей суммы"""
+    period_filter = generate_date_filter_criteria(selected_date, period)
+
+    expenses = Expenses.objects.filter(Q(user_id=request.user.pk)
+                                   & Q(**period_filter)) \
+                                    .select_related('user') \
+                                    .select_related('category')
+
+    total_spent = 0
+
+    exp_for_categories = {}
+
+    for exp in expenses:
+        exp_for_categories.setdefault(exp.category, {'percent': 0, 'spent_for_category': 0})
+
+        exp_for_categories[exp.category]['spent_for_category'] += exp.amount
+        total_spent += exp.amount
+
+    for category in exp_for_categories:
+        percent_spent = round((exp_for_categories[category]['spent_for_category'] / total_spent) * 100)
+        exp_for_categories[category]['percent'] += percent_spent
+
+    return {'total_spent': total_spent, 'expenses': tuple(sorted(exp_for_categories.items(),
+                                                                 reverse=True,
+                                                                 key=lambda item: item[1]['percent']))}
+
+
+def get_expenses_category_user(request, selected_date: date, period: Period, category_id) -> dict:
+    """Получение всех трат определенной категории"""
+    period_filter = generate_date_filter_criteria(selected_date, period)
+
+    expenses = Expenses.objects.filter(Q(user_id=request.user.pk)
+                                       & Q(**period_filter)
+                                       & Q(category_id=category_id)) \
+                                        .select_related('user') \
+                                        .select_related('category')
+
+    return {'total_spent': sum(i.amount for i in expenses), 'spents': expenses}
